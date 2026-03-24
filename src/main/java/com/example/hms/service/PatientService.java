@@ -1,7 +1,7 @@
-package com.example.HMS_Sprint.Services;
+package com.example.hms.service;
 
-import com.example.HMS_Sprint.Entity.Patient;
-import com.example.HMS_Sprint.Repository.PatientRepository;
+import com.example.hms.entity.Patient;
+import com.example.hms.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PatientServices {
+public class PatientService {
 
     @Autowired
     private PatientRepository patientRepository;

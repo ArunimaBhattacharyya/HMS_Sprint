@@ -1,7 +1,7 @@
-package com.example.HMS_Sprint.Controller;
+package com.example.hms.controller;
 
-import com.example.HMS_Sprint.Entity.Patient;
-import com.example.HMS_Sprint.Services.PatientServices;
+import com.example.hms.entity.Patient;
+import com.example.hms.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 public class PatientController {
 
     @Autowired
-    private PatientServices patientServices;
+    private PatientService patientServices;
 
     @GetMapping
     public List<Patient> getAllPatients() {

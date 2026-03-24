@@ -1,6 +1,6 @@
-package com.example.HMS_Sprint.Repository;
+package com.example.hms.repository;
 
-import com.example.HMS_Sprint.Entity.Patient;
+import com.example.hms.entity.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

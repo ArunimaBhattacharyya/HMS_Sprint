@@ -1,4 +1,4 @@
-package com.example.HMS_Sprint;
+package com.example.hms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

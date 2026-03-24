@@ -1,14 +1,14 @@
-package com.example.HMS_Sprint.Services;
+package com.example.hms.service;
 
-import com.example.HMS_Sprint.Entity.Nurse;
-import com.example.HMS_Sprint.Repository.NurseRepository;
+import com.example.hms.entity.Nurse;
+import com.example.hms.repository.NurseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class NurseServices {
+public class NurseService {
 
     @Autowired
     private NurseRepository nurseRepository;
