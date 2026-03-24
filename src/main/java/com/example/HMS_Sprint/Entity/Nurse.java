@@ -4,7 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "Nurse")
 public class Nurse {
@@ -24,44 +28,4 @@ public class Nurse {
 
     @Column(name = "SSN")
     private long ssn;
-
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public int getRegistered() {
-        return registered;
-    }
-
-    public void setRegistered(int registered) {
-        this.registered = registered;
-    }
-
-    public long getSsn() {
-        return ssn;
-    }
-
-    public void setSsn(long ssn) {
-        this.ssn = ssn;
-    }
 }
