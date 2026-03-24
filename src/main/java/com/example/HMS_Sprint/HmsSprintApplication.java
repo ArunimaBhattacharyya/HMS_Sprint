@@ -8,6 +8,7 @@ public class HmsSprintApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HmsSprintApplication.class, args);
-	}
 
+
+	}
 }
