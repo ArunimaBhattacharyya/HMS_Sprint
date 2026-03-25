@@ -26,19 +26,29 @@ public class PhysicianController {
         return physicianService.getPhysicianById(id);
     }
 
+    // GET /physicians/name/{name}
+    @GetMapping("/name/{name}")
+    public List<Physician> getPhysicianByName(@PathVariable String name) {
+        return physicianService.getPhysicianByName(name);
+    }
+
+    // GET /physicians/position/{position}
+    @GetMapping("/position/{position}")
+    public List<Physician> getPhysicianByPosition(@PathVariable String position) {
+        return physicianService.getPhysicianByPosition(position);
+    }
+
     // 🔹 POST (create)
     @PostMapping
-    public String addPhysician(@RequestBody Physician physician) throws Exception {
-        physicianService.addPhysician(physician);
-        return "Physician added successfully";
+    public Physician addPhysician(@RequestBody Physician physician) throws Exception {
+        return physicianService.addPhysician(physician);
     }
 
     // 🔹 PUT (update)
     @PutMapping("/{id}")
-    public String updatePhysician(@PathVariable int id,
+    public Physician updatePhysician(@PathVariable int id,
                                   @RequestBody Physician physician) throws Exception {
-        physicianService.updatePhysician(id, physician);
-        return "Physician updated successfully";
+        return physicianService.updatePhysician(id, physician);
     }
 
     // 🔹 DELETE
