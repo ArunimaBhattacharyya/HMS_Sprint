@@ -26,7 +26,15 @@ public class HomeController {
 
     @GetMapping("/team/{id}")
     public String profile(@PathVariable String id, Model model) {
-        model.addAttribute("team", TEAM);
-        return "home";
+        Map<String, Integer> personMap = Map.of(
+                "Ayan",      1,
+                "Anubhob",   2,
+                "Arunima",   3,
+                "Bidwattam", 4,
+                "Soumadwip", 5
+        );
+        Integer personId = personMap.getOrDefault(id, 1);
+        model.addAttribute("personId", personId);
+        return "section";
     }
 }

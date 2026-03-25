@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS — Sections</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:        #f0f4f8;
+            --surface:   #ffffff;
+            --border:    #dce4ee;
+            --accent:    #1a6fa8;
+            --accent-lt: #e8f3fb;
+            --accent-dk: #124e79;
+            --text-h:    #0d2233;
+            --text-b:    #3a4f61;
+            --text-m:    #6b8399;
+            --green:     #18977a;
+            --green-lt:  #e6f7f4;
+            --red:       #c0392b;
+            --red-lt:    #fdecea;
+            --amber:     #c47c10;
+            --amber-lt:  #fdf3e3;
+            --purple:    #6b3fa0;
+            --purple-lt: #f0eaf8;
+            --shadow-sm: 0 1px 3px rgba(13,34,51,.07), 0 1px 2px rgba(13,34,51,.05);
+            --shadow-md: 0 4px 16px rgba(13,34,51,.10), 0 1px 4px rgba(13,34,51,.06);
+            --shadow-lg: 0 12px 40px rgba(13,34,51,.13);
+            --radius:    14px;
+            --radius-sm: 8px;
+        }
+
+        html { font-size: 15px; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-b);
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0; width: 240px;
+            background: var(--text-h);
+            display: flex; flex-direction: column;
+            padding: 32px 0 24px;
+            z-index: 100;
+        }
+        .sidebar-logo {
+            padding: 0 28px 32px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sidebar-logo .logo-icon {
+            width: 36px; height: 36px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: grid; place-items: center;
+            font-size: 18px;
+        }
+        .sidebar-logo span {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            color: #fff;
+            letter-spacing: .02em;
+        }
+        .sidebar-logo small {
+            display: block;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .65rem;
+            color: var(--text-m);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        .nav-section {
+            padding: 0 16px 8px;
+            font-size: .65rem;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--text-m);
+            margin-top: 4px;
+        }
+        .nav-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 28px;
+            color: rgba(255,255,255,.55);
+            text-decoration: none;
+            font-size: .875rem;
+            font-weight: 400;
+            transition: background .15s, color .15s;
+        }
+        .nav-item:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.85); }
+        .nav-item.active { background: var(--accent); color: #fff; font-weight: 500; }
+        .nav-item .icon { font-size: 1rem; width: 20px; text-align: center; }
+
+        /* Dynamic nav items shown per person */
+        .nav-item-nurse  { display: none; }
+        .nav-item-doctor { display: none; }
+        .nav-item-oncall { display: none; }
+        .nav-item-presc  { display: none; }
+
+        /* ── Main ── */
+        .main {
+            margin-left: 240px;
+            min-height: 100vh;
+            padding: 36px 40px;
+        }
+
+        /* ── Top bar ── */
+        .topbar {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            margin-bottom: 32px;
+            gap: 16px;
+        }
+        .page-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--text-h);
+            line-height: 1.1;
+        }
+        .page-title em { font-style: italic; color: var(--accent); }
+        .page-subtitle {
+            margin-top: 4px;
+            font-size: .85rem;
+            color: var(--text-m);
+            font-weight: 300;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: .82rem;
+            font-weight: 500;
+            color: var(--text-m);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            transition: color .15s, border-color .15s;
+        }
+        .back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+        /* ── Section label ── */
+        .section-label {
+            font-size: .7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            color: var(--text-m);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* ── Module cards ── */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .module-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex; flex-direction: column;
+            box-shadow: var(--shadow-sm);
+            transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s;
+            animation: fadeUp .45s ease both;
+        }
+        .module-card:nth-child(1) { animation-delay: .08s; }
+        .module-card:nth-child(2) { animation-delay: .16s; }
+        .module-card:nth-child(3) { animation-delay: .24s; }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Banner */
+        .card-banner {
+            height: 116px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-banner::before {
+            content: '';
+            position: absolute; right: -30px; bottom: -30px;
+            width: 130px; height: 130px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.07);
+            pointer-events: none;
+        }
+        .card-banner::after {
+            content: '';
+            position: absolute; left: -20px; top: -20px;
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.04);
+            pointer-events: none;
+        }
+        .card-banner-nurse  { background: linear-gradient(135deg, var(--text-h) 0%, #1b3f62 100%); }
+        .card-banner-oncall { background: linear-gradient(135deg, #2e1a06 0%, #b87420 100%); }
+        .card-banner-doctor { background: linear-gradient(135deg, #0d2e22 0%, #1f7a5a 100%); }
+        .card-banner-presc  { background: linear-gradient(135deg, #1e0d30 0%, #6b3fa0 100%); }
+
+        .banner-icon { font-size: 2.8rem; position: relative; z-index: 1; }
+        .banner-tag {
+            font-size: .67rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            color: rgba(255,255,255,.7);
+            background: rgba(255,255,255,.13);
+            border: 1px solid rgba(255,255,255,.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            position: relative; z-index: 1;
+        }
+
+        /* Card body */
+        .card-body {
+            padding: 20px 22px 18px;
+            flex: 1;
+            display: flex; flex-direction: column;
+        }
+        .card-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-h);
+            margin-bottom: 7px;
+        }
+        .card-desc {
+            font-size: .845rem;
+            line-height: 1.65;
+            color: var(--text-b);
+            font-weight: 300;
+            flex: 1;
+            margin-bottom: 14px;
+        }
+
+        /* Pills */
+        .card-pills {
+            display: flex; flex-wrap: wrap; gap: 5px;
+            margin-bottom: 16px;
+        }
+        .pill {
+            font-size: .69rem;
+            font-weight: 500;
+            padding: 3px 9px;
+            border-radius: 20px;
+            letter-spacing: .02em;
+        }
+        .pill-nurse  { background: var(--accent-lt); color: var(--accent); }
+        .pill-doctor { background: var(--green-lt);  color: var(--green);  }
+        .pill-oncall { background: var(--amber-lt);  color: var(--amber);  }
+        .pill-presc  { background: var(--purple-lt); color: var(--purple); }
+        .pill-gray   { background: var(--bg); color: var(--text-m); border: 1px solid var(--border); }
+
+        /* Card footer */
+        .card-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+        .card-meta {
+            display: flex; align-items: center; gap: 6px;
+            font-size: .75rem;
+            color: var(--text-m);
+        }
+        .meta-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+        .card-cta {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: .8rem; font-weight: 500;
+            color: var(--accent);
+            transition: gap .18s, color .18s;
+        }
+        .module-card:hover .card-cta { gap: 8px; color: var(--accent-dk); }
+
+        /* ── Animations ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1100px) { .modules-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 900px) {
+            .sidebar { width: 60px; }
+            .sidebar-logo span, .sidebar-logo small, .nav-item span, .nav-section { display: none; }
+            .nav-item { padding: 12px; justify-content: center; }
+            .main { margin-left: 60px; padding: 24px 20px; }
+        }
+        @media (max-width: 640px) { .modules-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<!-- ══ Sidebar ══ -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">🏥</div>
+        <div>
+            <span>HMS</span>
+            <small>Hospital Mgmt</small>
+        </div>
+    </div>
+
+    <div class="nav-section">Core</div>
+    <a href="/" class="nav-item"><span class="icon">🏠</span><span>Home</span></a>
+
+    <!-- Person 1 nav items -->
+    <th:block th:if="${personId == 1}">
+        <a href="/nurses"  class="nav-item"><span class="icon">💉</span><span>Nurses</span></a>
+        <a href="/oncall"  class="nav-item"><span class="icon">📋</span><span>On Call</span></a>
+    </th:block>
+
+    <!-- Person 2 nav items -->
+    <th:block th:if="${personId == 2}">
+        <a href="/doctors" class="nav-item"><span class="icon">🩺</span><span>Doctors</span></a>
+    </th:block>
+
+    <!-- Person 3 nav items -->
+    <th:block th:if="${personId == 3}">
+        <a href="/prescriptions" class="nav-item"><span class="icon">💊</span><span>Prescriptions</span></a>
+    </th:block>
+</aside>
+
+<!-- ══ Main ══ -->
+<main class="main">
+
+    <div class="topbar">
+        <div>
+            <h1 class="page-title">My <em>Modules</em></h1>
+            <p class="page-subtitle">Sections assigned to your profile</p>
+        </div>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    <!-- ══ Person 1: Nurse + OnCall ══ -->
+    <div th:if="${personId == 1}">
+        <div class="section-label">2 modules assigned</div>
+        <div class="modules-grid">
+
+            <a class="module-card" href="/nurses">
+                <div class="card-banner card-banner-nurse">
+                    <span class="banner-icon">💉</span>
+                    <span class="banner-tag">Nurse</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Nursing Staff</div>
+                    <p class="card-desc">
+                        View and manage all registered nurses. Assign positions,
+                        track departments, and update contact details.
+                    </p>
+                    <div class="card-pills">
+                        <span class="pill pill-nurse">GET /nurses</span>
+                        <span class="pill pill-nurse">POST /nurses</span>
+                        <span class="pill pill-nurse">PUT /{id}</span>
+                        <span class="pill pill-gray">By Name</span>
+                        <span class="pill pill-gray">By Position</span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><span class="meta-dot"></span>5 endpoints · Full CRUD</span>
+                        <span class="card-cta">Open →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="module-card" href="/oncall">
+                <div class="card-banner card-banner-oncall">
+                    <span class="banner-icon">📋</span>
+                    <span class="banner-tag">On Call</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">On-Call Schedule</div>
+                    <p class="card-desc">
+                        Track nurse on-call rotations by block, floor, and time window.
+                        See who is on duty right now and manage shift handoffs.
+                    </p>
+                    <div class="card-pills">
+                        <span class="pill pill-oncall">GET /oncall</span>
+                        <span class="pill pill-oncall">POST /oncall</span>
+                        <span class="pill pill-gray">By Nurse</span>
+                        <span class="pill pill-gray">Active Now</span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><span class="meta-dot"></span>4 endpoints · Schedules</span>
+                        <span class="card-cta">Open →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- ══ Person 2: Doctor ══ -->
+    <div th:if="${personId == 2}">
+        <div class="section-label">1 module assigned</div>
+        <div class="modules-grid">
+
+            <a class="module-card" href="/doctors">
+                <div class="card-banner card-banner-doctor">
+                    <span class="banner-icon">🩺</span>
+                    <span class="banner-tag">Doctor</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Medical Doctors</div>
+                    <p class="card-desc">
+                        Manage physician records, specialisations, and availability.
+                        Link doctors to departments and patient assignments.
+                    </p>
+                    <div class="card-pills">
+                        <span class="pill pill-doctor">GET /doctors</span>
+                        <span class="pill pill-doctor">POST /doctors</span>
+                        <span class="pill pill-doctor">PUT /{id}</span>
+                        <span class="pill pill-gray">By Specialty</span>
+                        <span class="pill pill-gray">By Name</span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><span class="meta-dot"></span>5 endpoints · Full CRUD</span>
+                        <span class="card-cta">Open →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- ══ Person 3: Prescription ══ -->
+    <div th:if="${personId == 3}">
+        <div class="section-label">1 module assigned</div>
+        <div class="modules-grid">
+
+            <a class="module-card" href="/prescriptions">
+                <div class="card-banner card-banner-presc">
+                    <span class="banner-icon">💊</span>
+                    <span class="banner-tag">Prescription</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Prescriptions</div>
+                    <p class="card-desc">
+                        Manage patient prescriptions, medications, and dosage records.
+                        Track prescription history and doctor-patient associations.
+                    </p>
+                    <div class="card-pills">
+                        <span class="pill pill-presc">GET /prescriptions</span>
+                        <span class="pill pill-presc">POST /prescriptions</span>
+                        <span class="pill pill-presc">PUT /{id}</span>
+                        <span class="pill pill-gray">By Patient</span>
+                        <span class="pill pill-gray">By Doctor</span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-meta"><span class="meta-dot"></span>5 endpoints · Full CRUD</span>
+                        <span class="card-cta">Open →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>
