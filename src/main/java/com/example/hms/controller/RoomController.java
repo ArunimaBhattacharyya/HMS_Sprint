@@ -1,6 +1,7 @@
 package com.example.hms.controller;
 
-import com.example.hms.entity.Room;
+import com.example.hms.dto.RoomRequest;
+import com.example.hms.dto.RoomResponse;
 import com.example.hms.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,31 +18,32 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
-    //Get all rooms
+    // Get all rooms
     @GetMapping("/all")
-    public List<Room> getAllRooms() {
+    public List<RoomResponse> getAllRooms() {
         return roomService.getAllRooms();
     }
 
     // Create room
     @PostMapping("/create")
-    public Room createRoom(@RequestBody Room room) {
-        return roomService.saveRoom(room);
+    public RoomResponse createRoom(@RequestBody RoomRequest request) {
+        return roomService.saveRoom(request);
     }
 
     // Get by ID
     @GetMapping("/{id}")
-    public Room getRoom(@PathVariable int id) {
+    public RoomResponse getRoom(@PathVariable int id) {
         return roomService.getRoomById(id);
     }
 
-    // Update
+    // Update room
     @PutMapping("/update/{id}")
-    public Room updateRoom(@PathVariable int id, @RequestBody Room room) {
-        return roomService.updateRoom(id, room);
+    public RoomResponse updateRoom(@PathVariable int id,
+                                   @RequestBody RoomRequest request) {
+        return roomService.updateRoom(id, request);
     }
 
-    // Delete
+    // Delete room
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> deleteRoom(@PathVariable int id) {
 

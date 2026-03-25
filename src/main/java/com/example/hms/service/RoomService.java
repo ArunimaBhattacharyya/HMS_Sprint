@@ -1,5 +1,7 @@
 package com.example.hms.service;
 
+import com.example.hms.dto.RoomRequest;
+import com.example.hms.dto.RoomResponse;
 import com.example.hms.entity.Block;
 import com.example.hms.entity.BlockId;
 import com.example.hms.entity.Room;
@@ -19,61 +21,83 @@ public class RoomService {
     @Autowired
     private BlockRepository blockRepository;
 
-    // Create Room
-    public Room saveRoom(Room room) {
+    private Room convertToEntity(RoomRequest req) {
 
-        // Validate Block exists
-        BlockId blockId = new BlockId(
-                room.getBlock().getBlockFloor(),
-                room.getBlock().getBlockCode()
-        );
+        Room room = new Room();
+        room.setRoomNumber(req.getRoomNumber());
+        room.setRoomType(req.getRoomType());
+        room.setUnavailable(req.isUnavailable());
+
+        BlockId blockId = new BlockId(req.getBlockFloor(), req.getBlockCode());
 
         Block block = blockRepository.findById(blockId)
                 .orElseThrow(() -> new RuntimeException("Block not found"));
 
         room.setBlock(block);
 
-        return roomRepository.save(room);
+        return room;
     }
 
-    // Get all Rooms
-    public List<Room> getAllRooms() {
-        return roomRepository.findAll();
+    private RoomResponse convertToResponse(Room room) {
+
+        RoomResponse res = new RoomResponse();
+
+        res.setRoomNumber(room.getRoomNumber());
+        res.setRoomType(room.getRoomType());
+        res.setUnavailable(room.isUnavailable());
+
+        res.setBlockFloor(room.getBlock().getBlockFloor());
+        res.setBlockCode(room.getBlock().getBlockCode());
+
+        return res;
     }
 
-    // Get Room by ID
-    public Room getRoomById(int roomNumber) {
-        return roomRepository.findById(roomNumber)
-                .orElseThrow(() -> new RuntimeException("Room not found"));
+    public RoomResponse saveRoom(RoomRequest req) {
+
+        Room room = convertToEntity(req);
+        Room saved = roomRepository.save(room);
+
+        return convertToResponse(saved);
     }
 
-    // Update Room
-    public Room updateRoom(int roomNumber, Room roomDetails) {
+
+    public List<RoomResponse> getAllRooms() {
+        return roomRepository.findAll()
+                .stream()
+                .map(this::convertToResponse)
+                .toList();
+    }
+
+    public RoomResponse getRoomById(int roomNumber) {
 
         Room room = roomRepository.findById(roomNumber)
                 .orElseThrow(() -> new RuntimeException("Room not found"));
 
-        room.setRoomType(roomDetails.getRoomType());
-        room.setUnavailable(roomDetails.isUnavailable());
-
-        // Update Block if needed
-        if (roomDetails.getBlock() != null) {
-
-            BlockId blockId = new BlockId(
-                    roomDetails.getBlock().getBlockFloor(),
-                    roomDetails.getBlock().getBlockCode()
-            );
-
-            Block block = blockRepository.findById(blockId)
-                    .orElseThrow(() -> new RuntimeException("Block not found"));
-
-            room.setBlock(block);
-        }
-
-        return roomRepository.save(room);
+        return convertToResponse(room);
     }
 
-    // Delete Room
+    public RoomResponse updateRoom(int roomNumber, RoomRequest req) {
+
+        Room room = roomRepository.findById(roomNumber)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        room.setRoomType(req.getRoomType());
+        room.setUnavailable(req.isUnavailable());
+
+        // Update Block
+        BlockId blockId = new BlockId(req.getBlockFloor(), req.getBlockCode());
+
+        Block block = blockRepository.findById(blockId)
+                .orElseThrow(() -> new RuntimeException("Block not found"));
+
+        room.setBlock(block);
+
+        Room updated = roomRepository.save(room);
+
+        return convertToResponse(updated);
+    }
+
+
     public void deleteRoom(int roomNumber) {
 
         Room room = roomRepository.findById(roomNumber)
