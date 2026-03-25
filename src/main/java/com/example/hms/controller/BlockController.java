@@ -12,7 +12,7 @@ import com.example.hms.entity.Block;
 import com.example.hms.service.BlockService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/blocks")
 public class BlockController {
 
     @Autowired
