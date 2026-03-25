@@ -17,6 +17,7 @@ public class PatientController {
 
     @GetMapping
     public List<Patient> getAllPatients() {
+
         return patientServices.getAllPatients();
     }
 
@@ -28,16 +29,19 @@ public class PatientController {
 
     @GetMapping("/name/{name}")
     public List<Patient> getPatientByName(@PathVariable String name) {
+
         return patientServices.getPatientByName(name);
     }
 
     @GetMapping("/pcp/{pcp}")
     public List<Patient> getPatientByPcp(@PathVariable Integer pcp) {
+
         return patientServices.getPatientByPcp(pcp);
     }
 
     @PostMapping
     public Patient createPatient(@RequestBody Patient patient) {
+
         return patientServices.createPatient(patient);
     }
 

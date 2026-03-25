@@ -1,19 +1,17 @@
 package com.example.hms.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
-@Table(name = "Nurse")
+@Table(name = "nurse") // must match your MySQL table name exactly
 public class Nurse {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EmployeeID")
     private int employeeId;
 
@@ -24,7 +22,7 @@ public class Nurse {
     private String position;
 
     @Column(name = "Registered")
-    private int registered;
+    private int registered; // keep int if DB uses 0/1
 
     @Column(name = "SSN")
     private long ssn;
