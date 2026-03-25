@@ -1,6 +1,7 @@
 package com.example.hms.service;
 
 import com.example.hms.entity.Block;
+import com.example.hms.entity.BlockId;
 import com.example.hms.repository.BlockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,19 +24,30 @@ public class BlockService {
     }
 
     //update
-    public Block updateBlock(int id,Block blockdetails){
-        Block block=blockRepository.findById(id).orElseThrow(()->new RuntimeException("Block not found"+id));
+    public Block updateBlock(int blockFloor, int blockCode, Block blockDetails){
+        BlockId currentId = new BlockId(blockFloor, blockCode);
+        blockRepository.findById(currentId)
+                .orElseThrow(() -> new RuntimeException("Block not found: floor=" + blockFloor + ", code=" + blockCode));
 
-        //update fields example
-        block.setBlockfloor(blockdetails.getBlockfloor());
-        block.setBlockcode(blockdetails.getBlockcode());
+        Block replacement = new Block();
+        replacement.setBlockFloor(blockDetails.getBlockFloor());
+        replacement.setBlockCode(blockDetails.getBlockCode());
 
-        return blockRepository.save(block);
+        BlockId newId = new BlockId(replacement.getBlockFloor(), replacement.getBlockCode());
+        if (!currentId.equals(newId) && blockRepository.existsById(newId)) {
+            throw new RuntimeException("Block already exists: floor=" + replacement.getBlockFloor() + ", code=" + replacement.getBlockCode());
+        }
+
+        // Composite PK values are the only columns here, so update is replace semantics.
+        blockRepository.deleteById(currentId);
+        return blockRepository.save(replacement);
     }
 
     //delete
-    public void deleteBlock(int id){
-        Block block=blockRepository.findById(id).orElseThrow(()->new RuntimeException("Block not found with id "+id));
+    public void deleteBlock(int blockFloor, int blockCode){
+        BlockId blockId = new BlockId(blockFloor, blockCode);
+        Block block = blockRepository.findById(blockId)
+                .orElseThrow(() -> new RuntimeException("Block not found: floor=" + blockFloor + ", code=" + blockCode));
 
         blockRepository.delete(block);
     }

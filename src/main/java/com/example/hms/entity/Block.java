@@ -1,5 +1,7 @@
 package com.example.hms.entity;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,15 +9,20 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name="Block")
+@Table(name = "Block")
+@IdClass(BlockId.class)
 public class Block {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="BlockFloor")
-    private int blockfloor;
+    @Column(name = "BlockFloor", nullable = false)
+    @JsonProperty("BlockFloor")
+    @JsonAlias({"blockFloor", "blockfloor"})
+    private int blockFloor;
 
-    @Column(name="BlockCode")
-    private int blockcode;
+    @Id
+    @Column(name = "BlockCode", nullable = false)
+    @JsonProperty("BlockCode")
+    @JsonAlias({"blockCode", "blockcode"})
+    private int blockCode;
 
 }

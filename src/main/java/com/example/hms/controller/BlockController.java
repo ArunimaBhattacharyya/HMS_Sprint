@@ -30,16 +30,15 @@ public class BlockController {
     }
 
     //update
-    @PutMapping("/updateblock/{id}")
-    public Block updateBlock(@PathVariable int id,@RequestBody Block block){
-        block.setBlockfloor(id);
-        return blockService.updateBlock(id, block);
+    @PutMapping("/updateblock/{blockFloor}/{blockCode}")
+    public Block updateBlock(@PathVariable int blockFloor, @PathVariable int blockCode, @RequestBody Block block){
+        return blockService.updateBlock(blockFloor, blockCode, block);
     }
 
     //delete
-    @DeleteMapping("/deleteblock/{id}")
-    public ResponseEntity<Map<String, String>> deleteBlock(@PathVariable int id) {
-        blockService.deleteBlock(id);
+    @DeleteMapping("/deleteblock/{blockFloor}/{blockCode}")
+    public ResponseEntity<Map<String, String>> deleteBlock(@PathVariable int blockFloor, @PathVariable int blockCode) {
+        blockService.deleteBlock(blockFloor, blockCode);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Block deleted successfully");
         return ResponseEntity.ok(response);
