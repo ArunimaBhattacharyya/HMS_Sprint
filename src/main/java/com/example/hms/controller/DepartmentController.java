@@ -13,13 +13,13 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    // 🔹 GET all
+    //GET all
     @GetMapping
     public List<Department> getAllDepartments() throws Exception {
         return departmentService.getAllDepartments();
     }
 
-    // 🔹 GET by ID
+    //GET by ID
     @GetMapping("/{id}")
     public Department getDepartmentById(@PathVariable int id) throws Exception {
         return departmentService.getDepartmentById(id);
@@ -37,20 +37,20 @@ public class DepartmentController {
         return departmentService.getDepartmentByHead(head);
     }
 
-    // 🔹 POST (create)
+    //POST (create)
     @PostMapping
     public Department addDepartment(@RequestBody Department department) throws Exception {
         return departmentService.addDepartment(department);
     }
 
-    // 🔹 PUT (update)
+    //PUT (update)
     @PutMapping("/{id}")
     public Department updateDepartment(@PathVariable int id,
                                        @RequestBody Department department) throws Exception {
         return departmentService.updateDepartment(id, department);
     }
 
-    // 🔹 DELETE
+    //DELETE
     @DeleteMapping("/{id}")
     public String deleteDepartment(@PathVariable int id) throws Exception {
         departmentService.deleteDepartment(id);

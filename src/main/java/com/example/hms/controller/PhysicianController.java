@@ -14,13 +14,13 @@ public class PhysicianController {
     private PhysicianService physicianService;
 
 
-    // 🔹 GET all
+    //GET all
     @GetMapping
     public List<Physician> getAllPhysicians() throws Exception {
         return physicianService.getAllPhysicians();
     }
 
-    // 🔹 GET by ID
+    //GET by ID
     @GetMapping("/{id}")
     public Physician getPhysicianById(@PathVariable int id) throws Exception {
         return physicianService.getPhysicianById(id);
@@ -38,20 +38,20 @@ public class PhysicianController {
         return physicianService.getPhysicianByPosition(position);
     }
 
-    // 🔹 POST (create)
+    //POST (create)
     @PostMapping
     public Physician addPhysician(@RequestBody Physician physician) throws Exception {
         return physicianService.addPhysician(physician);
     }
 
-    // 🔹 PUT (update)
+    //PUT (update)
     @PutMapping("/{id}")
     public Physician updatePhysician(@PathVariable int id,
                                   @RequestBody Physician physician) throws Exception {
         return physicianService.updatePhysician(id, physician);
     }
 
-    // 🔹 DELETE
+    //DELETE
     @DeleteMapping("/{id}")
     public String deletePhysician(@PathVariable int id) throws Exception {
         physicianService.deletePhysician(id);

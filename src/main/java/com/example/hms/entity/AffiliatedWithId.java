@@ -10,19 +10,21 @@ import java.util.Objects;
 @Getter
 public class AffiliatedWithId implements Serializable {
 
-    // Getters and Setters
+    //Getters and Setters
     private int physician;
     private int department;
 
-    // Default constructor
-    public AffiliatedWithId() {}
+    //Default constructor
+    public AffiliatedWithId() {
+
+    }
 
     public AffiliatedWithId(int physician, int department) {
         this.physician = physician;
         this.department = department;
     }
 
-    // equals() and hashCode() are required for composite keys
+    //equals() and hashCode() are required for composite keys
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -33,6 +35,7 @@ public class AffiliatedWithId implements Serializable {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(physician, department);
     }
 }

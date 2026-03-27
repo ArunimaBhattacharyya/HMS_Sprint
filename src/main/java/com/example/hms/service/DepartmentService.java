@@ -20,12 +20,12 @@ public class DepartmentService {
         return departmentRepository.findById(id).orElse(null);
     }
 
-    // Get department by name
+    //Get department by name
     public List<Department> getDepartmentByName(String name){
         return departmentRepository.findByName(name);
     }
 
-    // Get department by head physician ID
+    //Get department by head physician ID
     public List<Department> getDepartmentByHead(int head){
         return departmentRepository.findByHead(head);
     }
@@ -34,7 +34,7 @@ public class DepartmentService {
         return departmentRepository.save(department);
     }
 
-    // Update Existing Department
+    //Update Existing Department
     public Department updateDepartment(int id, Department updatedDepartment) {
 
         Department existingDepartment = departmentRepository.findById(id)

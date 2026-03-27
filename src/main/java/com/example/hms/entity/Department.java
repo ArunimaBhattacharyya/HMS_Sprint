@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "department")
 public class Department {
 
-    // 🔹 Getters and Setters (Handled by Lombok)
+    //Getters and Setters (Handled by Lombok)
     @Id
     @Column(name = "DepartmentID")
     private int departmentId;
@@ -23,24 +23,24 @@ public class Department {
     @Column(name = "Head", nullable = false)
     private int head;
 
-    // 🔹 Commented relationships for future use (matching your Physician format)
+    //Commented relationships for future use (matching your Physician format)
 
-//    // 🔹 One Department → Has One Head Physician
-//    @OneToOne
-//    @JoinColumn(name = "Head", insertable = false, updatable = false)
-//    private Physician headPhysician;
-//
-//    // 🔹 Many-to-Many with Physician (via affiliated_with)
-//    @ManyToMany(mappedBy = "departments")
-//    private List<Physician> affiliatedPhysicians;
+    //One Department → Has One Head Physician
+    @OneToOne
+    @JoinColumn(name = "Head", insertable = false, updatable = false)
+    private Physician headPhysician;
 
-    // 🔹 Constructors
-//    public Department() {
-//    }
+//    //Many-to-Many with Physician (via affiliated_with)
+    @ManyToMany(mappedBy = "departments")
+    private List<Physician> affiliatedPhysicians;
 
-//    public Department(int departmentId, String name, int head) {
-//        this.departmentId = departmentId;
-//        this.name = name;
-//        this.head = head;
-//    }
+    //Constructors
+    public Department() {
+    }
+
+    public Department(int departmentId, String name, int head) {
+        this.departmentId = departmentId;
+        this.name = name;
+        this.head = head;
+    }
 }

@@ -34,7 +34,7 @@ public class AffiliatedWithService {
         return affiliatedWithRepository.save(affiliatedWith);
     }
 
-    // Update Existing Affiliation (Updating primaryAffiliation flag)
+    //Update Existing Affiliation (Updating primaryAffiliation flag)
     public AffiliatedWith updateAffiliation(int physicianId, int departmentId, AffiliatedWith updatedAffiliation) {
         AffiliatedWithId id = new AffiliatedWithId(physicianId, departmentId);
         AffiliatedWith existingAffiliation = affiliatedWithRepository.findById(id)

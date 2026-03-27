@@ -1,6 +1,5 @@
 package com.example.hms.service;
 
-import com.example.hms.entity.Nurse;
 import com.example.hms.entity.Physician;
 import com.example.hms.repository.PhysicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +23,13 @@ public class PhysicianService {
         return physicianRepository.findById(id).orElse(null);
     }
 
-    //get physician by name
+    //Get physician by name
     public List<Physician> getPhysicianByName(String name){
 
         return physicianRepository.findByName(name);
     }
 
-    //get physician by position
+    //Get physician by position
     public List<Physician> getPhysicianByPosition(String position){
 
         return physicianRepository.findByPosition(position);

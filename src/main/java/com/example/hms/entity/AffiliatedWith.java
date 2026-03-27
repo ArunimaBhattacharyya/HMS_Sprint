@@ -11,7 +11,7 @@ import lombok.Setter;
 @IdClass(AffiliatedWithId.class) // Tells JPA to use the composite key class
 public class AffiliatedWith {
 
-    // 🔹 Getters and Setters (Handled by Lombok)
+    //Getters and Setters (Handled by Lombok)
 
     @Id
     @Column(name = "Physician")
@@ -24,25 +24,25 @@ public class AffiliatedWith {
     @Column(name = "PrimaryAffiliation")
     private Boolean primaryAffiliation; // BIT(1) maps to Boolean in Java
 
-    // 🔹 Commented relationships for future use
+    //Commented relationships for future use
 
-//    // 🔹 Many-to-One with Physician
-//    @ManyToOne
-//    @JoinColumn(name = "Physician", insertable = false, updatable = false)
-//    private Physician physicianEntity;
-//
-//    // 🔹 Many-to-One with Department
-//    @ManyToOne
-//    @JoinColumn(name = "Department", insertable = false, updatable = false)
-//    private Department departmentEntity;
+    //Many-to-One with Physician
+    @ManyToOne
+    @JoinColumn(name = "Physician", insertable = false, updatable = false)
+    private Physician physicianEntity;
 
-    // 🔹 Constructors
-//    public AffiliatedWith() {
-//    }
+    //Many-to-One with Department
+    @ManyToOne
+    @JoinColumn(name = "Department", insertable = false, updatable = false)
+    private Department departmentEntity;
 
-//    public AffiliatedWith(int physician, int department, Boolean primaryAffiliation) {
-//        this.physician = physician;
-//        this.department = department;
-//        this.primaryAffiliation = primaryAffiliation;
-//    }
+    //Constructors
+    public AffiliatedWith() {
+    }
+
+    public AffiliatedWith(int physician, int department, Boolean primaryAffiliation) {
+        this.physician = physician;
+        this.department = department;
+        this.primaryAffiliation = primaryAffiliation;
+    }
 }
