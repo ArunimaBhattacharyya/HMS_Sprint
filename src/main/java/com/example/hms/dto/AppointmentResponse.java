@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class AppointmentResponse {
     private int appointmentId;
 
-    private long patientSsn;
+    private int patientSsn;
     private String patientName;
 
     private Integer prepNurseId;

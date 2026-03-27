@@ -38,7 +38,7 @@ public class AppointmentController {
 	}
 
 	@GetMapping("/patient/{patientSsn}")
-	public List<AppointmentResponse> getByPatient(@PathVariable long patientSsn) {
+	public List<AppointmentResponse> getByPatient(@PathVariable int patientSsn) {
 		return appointmentService.getByPatient(patientSsn);
 	}
 

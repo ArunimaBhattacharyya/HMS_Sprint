@@ -25,5 +25,5 @@ public class Nurse {
     private int registered; // keep int if DB uses 0/1
 
     @Column(name = "SSN")
-    private long ssn;
+    private int ssn;
 }

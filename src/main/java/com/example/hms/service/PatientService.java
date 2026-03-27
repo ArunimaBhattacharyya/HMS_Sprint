@@ -18,7 +18,7 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public Optional<Patient> getPatientById(long ssn) {
+    public Optional<Patient> getPatientById(int ssn) {
         return patientRepository.findById(ssn);
     }
 
@@ -34,7 +34,7 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
-    public Patient updatePatient(long ssn, Patient updatedPatient) {
+    public Patient updatePatient(int ssn, Patient updatedPatient) {
         Patient existingPatient = patientRepository.findById(ssn)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
 
@@ -47,7 +47,7 @@ public class PatientService {
         return patientRepository.save(existingPatient);
     }
 
-    public void deletePatient(long ssn) {
+    public void deletePatient(int ssn) {
         if (!patientRepository.existsById(ssn)) {
             throw new RuntimeException("Patient not found: " + ssn);
         }

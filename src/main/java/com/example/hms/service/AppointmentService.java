@@ -67,7 +67,7 @@ public class AppointmentService {
 		return mapToResponse(appointment);
 	}
 
-	public List<AppointmentResponse> getByPatient(long patientSsn) {
+	public List<AppointmentResponse> getByPatient(int patientSsn) {
 		return appointmentRepository.findByPatientSsn(patientSsn)
 				.stream()
 				.map(this::mapToResponse)

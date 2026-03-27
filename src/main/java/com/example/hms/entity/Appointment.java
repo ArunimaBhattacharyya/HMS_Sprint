@@ -16,7 +16,7 @@ public class Appointment {
 	private int appointmentId;
 
 	@Column(name = "Patient", nullable = false)
-	private long patientSsn;
+	private int patientSsn;
 
 	@Column(name = "PrepNurse")
 	private Integer prepNurseId;
@@ -41,11 +41,11 @@ public class Appointment {
 		this.appointmentId = appointmentId;
 	}
 
-	public long getPatientSsn() {
+	public int getPatientSsn() {
 		return patientSsn;
 	}
 
-	public void setPatientSsn(long patientSsn) {
+	public void setPatientSsn(int patientSsn) {
 		this.patientSsn = patientSsn;
 	}
 

@@ -11,7 +11,7 @@ public class Patient {
 
     @Id
     @Column(name = "SSN")
-    private long ssn;
+    private int ssn;
 
     @Column(name = "Name")
     private String name;
@@ -28,11 +28,11 @@ public class Patient {
     @Column(name = "PCP")
     private Integer pcp;
 
-    public long getSsn() {
+    public int getSsn() {
         return ssn;
     }
 
-    public void setSsn(long ssn) {
+    public void setSsn(int ssn) {
         this.ssn = ssn;
     }
 
