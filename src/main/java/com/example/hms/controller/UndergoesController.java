@@ -1,6 +1,6 @@
 package com.example.hms.controller;
 
-import com.example.hms.entity.Undergoes;
+import com.example.hms.dto.UndergoesDTO;
 import com.example.hms.entity.UndergoesId;
 import com.example.hms.service.UndergoesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +16,35 @@ public class UndergoesController {
     @Autowired
     private UndergoesService service;
 
+    // GET ALL
     @GetMapping
-    public List<Undergoes> getAll() {
+    public List<UndergoesDTO> getAll() {
         return service.getAll();
     }
 
-    //get by patient/procedure/stay/date
+    // GET BY ID
     @GetMapping("/{patient}/{procedure}/{stay}/{date}")
-    public Undergoes getById(
+    public UndergoesDTO getById(
             @PathVariable int patient,
             @PathVariable int procedure,
             @PathVariable int stay,
             @PathVariable String date) {
 
-        return service.getById(patient, procedure, stay, LocalDateTime.parse(date));
+        return service.getById(
+                patient,
+                procedure,
+                stay,
+                LocalDateTime.parse(date)
+        );
     }
 
-    //create
+    // CREATE
     @PostMapping
-    public Undergoes create(@RequestBody Undergoes u) {
-        return service.create(u);
+    public UndergoesDTO create(@RequestBody UndergoesDTO dto) {
+        return service.create(dto);
     }
 
+    // DELETE
     @DeleteMapping
     public String delete(@RequestBody UndergoesId id) {
         service.delete(id);

@@ -8,26 +8,58 @@ public class UndergoesDTO {
     private int procedureId;
     private int stayId;
     private int physicianId;
-    private int nurseId;
+
+    private Integer nurseId;
+
     private LocalDateTime date;
 
     public UndergoesDTO() {}
 
-    public int getPatientId() { return patientId; }
-    public void setPatientId(int patientId) { this.patientId = patientId; }
+    public int getPatientId() {
+        return patientId;
+    }
 
-    public int getProcedureId() { return procedureId; }
-    public void setProcedureId(int procedureId) { this.procedureId = procedureId; }
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
+    }
 
-    public int getStayId() { return stayId; }
-    public void setStayId(int stayId) { this.stayId = stayId; }
+    public int getProcedureId() {
+        return procedureId;
+    }
 
-    public int getPhysicianId() { return physicianId; }
-    public void setPhysicianId(int physicianId) { this.physicianId = physicianId; }
+    public void setProcedureId(int procedureId) {
+        this.procedureId = procedureId;
+    }
 
-    public int getNurseId() { return nurseId; }
-    public void setNurseId(int nurseId) { this.nurseId = nurseId; }
+    public int getStayId() {
+        return stayId;
+    }
 
-    public LocalDateTime getDate() { return date; }
-    public void setDate(LocalDateTime date) { this.date = date; }
+    public void setStayId(int stayId) {
+        this.stayId = stayId;
+    }
+
+    public int getPhysicianId() {
+        return physicianId;
+    }
+
+    public void setPhysicianId(int physicianId) {
+        this.physicianId = physicianId;
+    }
+
+    public Integer getNurseId() {
+        return nurseId;
+    }
+
+    public void setNurseId(Integer nurseId) {
+        this.nurseId = nurseId;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 }
