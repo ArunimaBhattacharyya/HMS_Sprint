@@ -21,6 +21,7 @@ public class UndergoesController {
         return service.getAll();
     }
 
+    //get by patient/procedure/stay/date
     @GetMapping("/{patient}/{procedure}/{stay}/{date}")
     public Undergoes getById(
             @PathVariable int patient,
@@ -31,6 +32,7 @@ public class UndergoesController {
         return service.getById(patient, procedure, stay, LocalDateTime.parse(date));
     }
 
+    //create
     @PostMapping
     public Undergoes create(@RequestBody Undergoes u) {
         return service.create(u);

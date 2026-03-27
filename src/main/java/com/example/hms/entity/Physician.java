@@ -1,5 +1,6 @@
 package com.example.hms.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +11,15 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "physician")
+
+@JsonIgnoreProperties({
+        "appointments",
+        "undergoes",
+        "departments",
+        "procedures"
+})
 public class Physician {
 
-    //Getters and Setters
     @Id
     @Column(name = "EmployeeID")
     private int employeeId;
@@ -26,20 +33,13 @@ public class Physician {
     @Column(name = "SSN", unique = true)
     private int ssn;
 
-    //One Physician → Many Appointments
-    @OneToMany(mappedBy = "physician")
+    @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY)
     private List<Appointment> appointments;
 
-    //One Physician → Many Prescriptions
-//    @OneToMany(mappedBy = "physician")
-//    private List<Prescribes> prescriptions;
-
-    //One Physician → Many Undergoes
-    @OneToMany(mappedBy = "physician")
+    @OneToMany(mappedBy = "physician", fetch = FetchType.LAZY)
     private List<Undergoes> undergoes;
 
-    //Many-to-Many with Department (via affiliated_with)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "affiliated_with",
             joinColumns = @JoinColumn(name = "Physician"),
@@ -47,8 +47,8 @@ public class Physician {
     )
     private List<Department> departments;
 
-    //Many-to-Many with Procedures (via trained_in)
-    @ManyToMany
+    // Many-to-Many with Procedures
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "trained_in",
             joinColumns = @JoinColumn(name = "Physician"),
@@ -56,10 +56,8 @@ public class Physician {
     )
     private List<Procedure> procedures;
 
-    //Constructors
-    public Physician() {
-
-    }
+    // Constructors
+    public Physician() {}
 
     public Physician(int employeeId, String name, String position, int ssn) {
         this.employeeId = employeeId;
@@ -67,5 +65,4 @@ public class Physician {
         this.position = position;
         this.ssn = ssn;
     }
-
 }
