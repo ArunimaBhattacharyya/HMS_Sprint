@@ -17,13 +17,13 @@ public class UndergoesController {
     @Autowired
     private UndergoesService service;
 
-    // ✅ GET ALL
+    // GET ALL
     @GetMapping
     public List<UndergoesDTO> getAll() {
         return service.getAll();
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @GetMapping("/{patient}/{procedure}/{stay}/{date}")
     public UndergoesDTO getById(
             @PathVariable int patient,
@@ -39,13 +39,13 @@ public class UndergoesController {
         );
     }
 
-    // ✅ CREATE
+    // CREATE
     @PostMapping
     public UndergoesDTO create(@Valid @RequestBody UndergoesDTO dto) {
         return service.create(dto);
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @PutMapping("/{patient}/{procedure}/{stay}/{date}")
     public UndergoesDTO update(
             @PathVariable int patient,
@@ -63,7 +63,7 @@ public class UndergoesController {
         );
     }
 
-    // ✅ DELETE (Better REST style optional below)
+    // DELETE (Better REST style optional below)
     @DeleteMapping("/{patient}/{procedure}/{stay}/{date}")
     public String delete(
             @PathVariable int patient,
