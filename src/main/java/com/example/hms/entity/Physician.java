@@ -47,15 +47,6 @@ public class Physician {
     )
     private List<Department> departments;
 
-//    // Many-to-Many with Procedures
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "trained_in",
-//            joinColumns = @JoinColumn(name = "Physician"),
-//            inverseJoinColumns = @JoinColumn(name = "Treatment")
-//    )
-//    private List<Procedure> procedures;
-
     // Constructors
     public Physician() {}
 
