@@ -22,10 +22,10 @@ public class UndergoesId implements Serializable {
     @Column(name = "DateUndergoes")
     private LocalDateTime dateUndergoes;
 
-    // ✅ Default Constructor
+    // Default Constructor
     public UndergoesId() {}
 
-    // ✅ Parameterized Constructor
+    // Parameterized Constructor
     public UndergoesId(int patient, int procedures, int stay, LocalDateTime dateUndergoes) {
         this.patient = patient;
         this.procedures = procedures;
