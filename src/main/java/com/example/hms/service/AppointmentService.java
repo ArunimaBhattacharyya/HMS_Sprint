@@ -44,8 +44,11 @@ public class AppointmentService {
 		Appointment appointment = new Appointment();
 		appointment.setAppointmentId(request.getAppointmentId());
 		appointment.setPatientSsn(patient.getSsn());
+		appointment.setPatient(patient);
 		appointment.setPrepNurseId(request.getPrepNurseId());
+		appointment.setPrepNurse(prepNurse);
 		appointment.setPhysicianId(physician.getEmployeeId());
+		appointment.setPhysician(physician);
 		appointment.setStart(request.getStart());
 		appointment.setEnd(request.getEnd());
 		appointment.setExaminationRoom(request.getExaminationRoom());
@@ -103,8 +106,11 @@ public class AppointmentService {
 		validateTimeWindow(request.getStart(), request.getEnd());
 
 		existing.setPatientSsn(patient.getSsn());
+		existing.setPatient(patient);
 		existing.setPrepNurseId(request.getPrepNurseId());
+		existing.setPrepNurse(prepNurse);
 		existing.setPhysicianId(physician.getEmployeeId());
+		existing.setPhysician(physician);
 		existing.setStart(request.getStart());
 		existing.setEnd(request.getEnd());
 		existing.setExaminationRoom(request.getExaminationRoom());
@@ -135,14 +141,18 @@ public class AppointmentService {
 	}
 
 	private AppointmentResponse mapToResponse(Appointment appointment) {
-		Patient patient = patientRepository.findById(appointment.getPatientSsn())
-				.orElseThrow(() -> new RuntimeException("Patient not found for appointment"));
+		Patient patient = appointment.getPatient() != null
+				? appointment.getPatient()
+				: patientRepository.findById(appointment.getPatientSsn())
+						.orElseThrow(() -> new RuntimeException("Patient not found for appointment"));
 
-		Physician physician = physicianRepository.findById(appointment.getPhysicianId())
-				.orElseThrow(() -> new RuntimeException("Physician not found for appointment"));
+		Physician physician = appointment.getPhysician() != null
+				? appointment.getPhysician()
+				: physicianRepository.findById(appointment.getPhysicianId())
+						.orElseThrow(() -> new RuntimeException("Physician not found for appointment"));
 
-		Nurse prepNurse = null;
-		if (appointment.getPrepNurseId() != null) {
+		Nurse prepNurse = appointment.getPrepNurse();
+		if (prepNurse == null && appointment.getPrepNurseId() != null) {
 			prepNurse = nurseRepository.findById(appointment.getPrepNurseId())
 					.orElseThrow(() -> new RuntimeException("Nurse not found for appointment"));
 		}

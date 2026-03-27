@@ -3,6 +3,8 @@ package com.example.hms.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
@@ -18,17 +20,29 @@ public class Appointment {
 	@Column(name = "Patient", nullable = false)
 	private int patientSsn;
 
+	@ManyToOne
+	@JoinColumn(name = "Patient", referencedColumnName = "SSN", insertable = false, updatable = false)
+	private Patient patient;
+
 	@Column(name = "PrepNurse")
 	private Integer prepNurseId;
+
+	@ManyToOne
+	@JoinColumn(name = "PrepNurse", referencedColumnName = "EmployeeID", insertable = false, updatable = false)
+	private Nurse prepNurse;
 
 	@Column(name = "Physician", nullable = false)
 	private int physicianId;
 
+	@ManyToOne
+	@JoinColumn(name = "Physician", referencedColumnName = "EmployeeID", insertable = false, updatable = false)
+	private Physician physician;
+
 	@Column(name = "Starto", nullable = false)
-	private LocalDateTime start;
+	private LocalDateTime starto;
 
 	@Column(name = "Endo", nullable = false)
-	private LocalDateTime end;
+	private LocalDateTime endo;
 
 	@Column(name = "ExaminationRoom", nullable = false)
 	private String examinationRoom;
@@ -57,6 +71,30 @@ public class Appointment {
 		this.prepNurseId = prepNurseId;
 	}
 
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Nurse getPrepNurse() {
+		return prepNurse;
+	}
+
+	public void setPrepNurse(Nurse prepNurse) {
+		this.prepNurse = prepNurse;
+	}
+
+	public Physician getPhysician() {
+		return physician;
+	}
+
+	public void setPhysician(Physician physician) {
+		this.physician = physician;
+	}
+
 	public int getPhysicianId() {
 		return physicianId;
 	}
@@ -66,19 +104,19 @@ public class Appointment {
 	}
 
 	public LocalDateTime getStart() {
-		return start;
+		return starto;
 	}
 
 	public void setStart(LocalDateTime start) {
-		this.start = start;
+		this.starto = start;
 	}
 
 	public LocalDateTime getEnd() {
-		return end;
+		return endo;
 	}
 
 	public void setEnd(LocalDateTime end) {
-		this.end = end;
+		this.endo = end;
 	}
 
 	public String getExaminationRoom() {
