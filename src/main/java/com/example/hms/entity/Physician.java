@@ -30,15 +30,15 @@ public class Physician {
     @OneToMany(mappedBy = "physician")
     private List<Appointment> appointments;
 
-//    //One Physician → Many Prescriptions
+    //One Physician → Many Prescriptions
 //    @OneToMany(mappedBy = "physician")
 //    private List<Prescribes> prescriptions;
 
-//    //One Physician → Many Undergoes
-//    @OneToMany(mappedBy = "physician")
-//    private List<Undergoes> undergoes;
+    //One Physician → Many Undergoes
+    @OneToMany(mappedBy = "physician")
+    private List<Undergoes> undergoes;
 
-//    //Many-to-Many with Department (via affiliated_with)
+    //Many-to-Many with Department (via affiliated_with)
     @ManyToMany
     @JoinTable(
             name = "affiliated_with",
@@ -47,14 +47,14 @@ public class Physician {
     )
     private List<Department> departments;
 
-//    //Many-to-Many with Procedures (via trained_in)
-//    @ManyToMany
-//    @JoinTable(
-//            name = "trained_in",
-//            joinColumns = @JoinColumn(name = "Physician"),
-//            inverseJoinColumns = @JoinColumn(name = "Treatment")
-//    )
-//    private List<Procedures> procedures;
+    //Many-to-Many with Procedures (via trained_in)
+    @ManyToMany
+    @JoinTable(
+            name = "trained_in",
+            joinColumns = @JoinColumn(name = "Physician"),
+            inverseJoinColumns = @JoinColumn(name = "Treatment")
+    )
+    private List<Procedure> procedures;
 
     //Constructors
     public Physician() {
