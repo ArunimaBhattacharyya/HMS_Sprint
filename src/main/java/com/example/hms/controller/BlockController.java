@@ -43,4 +43,16 @@ public class BlockController {
         response.put("message", "Block deleted successfully");
         return ResponseEntity.ok(response);
     }
+
+    // GET by blockFloor
+    @GetMapping("/floor/{blockFloor}")
+    public List<Block> getByFloor(@PathVariable int blockFloor) {
+        return blockService.getBlocksByFloor(blockFloor);
+    }
+
+    // GET by blockCode
+    @GetMapping("/code/{blockCode}")
+    public List<Block> getByCode(@PathVariable int blockCode) {
+        return blockService.getBlocksByCode(blockCode);
+    }
 }

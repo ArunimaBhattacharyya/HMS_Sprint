@@ -52,4 +52,12 @@ public class BlockService {
         blockRepository.delete(block);
     }
 
+    public List<Block> getBlocksByFloor(int blockFloor) {
+        return blockRepository.findByBlockFloor(blockFloor);
+    }
+
+    public List<Block> getBlocksByCode(int blockCode) {
+        return blockRepository.findByBlockCode(blockCode);
+    }
+
 }
