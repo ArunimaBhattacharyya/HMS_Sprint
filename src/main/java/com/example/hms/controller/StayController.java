@@ -33,6 +33,16 @@ public class StayController {
         return stayService.getStayById(id);
     }
 
+    @GetMapping("/patient/{patientId}")
+    public List<StayResponse> getByPatient(@PathVariable int patientId) {
+        return stayService.getStayByPatient(patientId);
+    }
+
+    @GetMapping("/room/{roomId}")
+    public List<StayResponse> getByRoom(@PathVariable int roomId) {
+        return stayService.getStayByRoom(roomId);
+    }
+
     // UPDATE
     @PutMapping("/{id}")
     public StayResponse update(@PathVariable int id, @RequestBody StayRequest request) {

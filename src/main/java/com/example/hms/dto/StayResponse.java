@@ -10,12 +10,8 @@ import java.time.LocalDateTime;
 public class StayResponse {
 
     private int stayId;
-
-    private int patientId;
-    private String patientName;
-
-    private int roomId;
-    private String roomType;
+    private int patientId;   // SSN
+    private int roomId;      // RoomNumber
 
     private LocalDateTime stayStart;
     private LocalDateTime stayEnd;

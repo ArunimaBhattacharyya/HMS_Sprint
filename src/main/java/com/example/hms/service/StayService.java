@@ -105,14 +105,37 @@ public class StayService {
         response.setStayId(stay.getStayId());
 
         response.setPatientId(stay.getPatient().getSsn());
-        response.setPatientName(stay.getPatient().getName());
-
         response.setRoomId(stay.getRoom().getRoomNumber());
-        response.setRoomType(stay.getRoom().getRoomType());
 
         response.setStayStart(stay.getStayStart());
         response.setStayEnd(stay.getStayEnd());
 
         return response;
+    }
+
+    public List<StayResponse> getStayByPatient(int patientId) {
+
+        List<Stay> stays = stayRepository.findByPatient_Ssn(patientId);
+
+        if (stays.isEmpty()) {
+            throw new RuntimeException("No stay found for patient: " + patientId);
+        }
+
+        return stays.stream()
+                .map(this::convertToResponse)
+                .toList();
+    }
+
+    public List<StayResponse> getStayByRoom(int roomId) {
+
+        List<Stay> stays = stayRepository.findByRoom_RoomNumber(roomId);
+
+        if (stays.isEmpty()) {
+            throw new RuntimeException("No stay found for room: " + roomId);
+        }
+
+        return stays.stream()
+                .map(this::convertToResponse)
+                .toList();
     }
 }
