@@ -23,8 +23,9 @@ public class OnCallService {
     @Autowired
     private BlockRepository blockRepository;
 
-    // create
     public OnCallResponse create(OnCallRequest request){
+
+        System.out.println("REQUEST: " + request);
 
         Nurse nurse = nurseRepository.findById(request.getNurseId())
                 .orElseThrow(() -> new RuntimeException("Nurse not found"));

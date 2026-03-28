@@ -18,18 +18,21 @@ public class OnCallController {
     // Create
     @PostMapping
     public OnCallResponse create(@RequestBody OnCallRequest request) {
+
         return onCallService.create(request);
     }
 
     // get all
     @GetMapping
     public List<OnCallResponse> getAll() {
+
         return onCallService.getAll();
     }
 
     // get by nurse
     @GetMapping("/nurse/{id}")
     public List<OnCallResponse> getByNurse(@PathVariable int id) {
+
         return onCallService.getByNurse(id);
     }
 }
