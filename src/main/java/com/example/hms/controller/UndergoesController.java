@@ -23,7 +23,7 @@ public class UndergoesController {
         return service.getAll();
     }
 
-    // GET BY ID
+    // GET BY COMPOSITE ID
     @GetMapping("/{patient}/{procedure}/{stay}/{date}")
     public UndergoesDTO getById(
             @PathVariable int patient,
@@ -36,6 +36,43 @@ public class UndergoesController {
                 procedure,
                 stay,
                 LocalDateTime.parse(date)
+        );
+    }
+
+    // FILTER APIs
+    @GetMapping("/patient/{patientId}")
+    public List<UndergoesDTO> getByPatient(@PathVariable int patientId) {
+        return service.getByPatient(patientId);
+    }
+
+    @GetMapping("/procedure/{procedureId}")
+    public List<UndergoesDTO> getByProcedure(@PathVariable int procedureId) {
+        return service.getByProcedure(procedureId);
+    }
+
+    @GetMapping("/stay/{stayId}")
+    public List<UndergoesDTO> getByStay(@PathVariable int stayId) {
+        return service.getByStay(stayId);
+    }
+
+    @GetMapping("/physician/{physicianId}")
+    public List<UndergoesDTO> getByPhysician(@PathVariable int physicianId) {
+        return service.getByPhysician(physicianId);
+    }
+
+    @GetMapping("/nurse/{nurseId}")
+    public List<UndergoesDTO> getByNurse(@PathVariable int nurseId) {
+        return service.getByNurse(nurseId);
+    }
+
+    @GetMapping("/date-range")
+    public List<UndergoesDTO> getByDateRange(
+            @RequestParam String start,
+            @RequestParam String end) {
+
+        return service.getByDateRange(
+                LocalDateTime.parse(start),
+                LocalDateTime.parse(end)
         );
     }
 
@@ -63,7 +100,7 @@ public class UndergoesController {
         );
     }
 
-    // DELETE (Better REST style optional below)
+    // DELETE
     @DeleteMapping("/{patient}/{procedure}/{stay}/{date}")
     public String delete(
             @PathVariable int patient,

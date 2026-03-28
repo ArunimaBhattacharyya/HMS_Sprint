@@ -4,62 +4,32 @@ import java.time.LocalDateTime;
 
 public class UndergoesDTO {
 
-    private int patientId;
-    private int procedureId;
-    private int stayId;
-    private int physicianId;
+    private int patient;
+    private int procedure;
+    private int stay;
+    private int physician;
 
-    private Integer nurseId;
+    private Integer assistingNurse;
 
-    private LocalDateTime date;
+    private LocalDateTime dateUndergoes;
 
     public UndergoesDTO() {}
 
-    public int getPatientId() {
-        return patientId;
-    }
+    public int getPatient() { return patient; }
+    public void setPatient(int patient) { this.patient = patient; }
 
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
-    }
+    public int getProcedure() { return procedure; }
+    public void setProcedure(int procedure) { this.procedure = procedure; }
 
-    public int getProcedureId() {
-        return procedureId;
-    }
+    public int getStay() { return stay; }
+    public void setStay(int stay) { this.stay = stay; }
 
-    public void setProcedureId(int procedureId) {
-        this.procedureId = procedureId;
-    }
+    public int getPhysician() { return physician; }
+    public void setPhysician(int physician) { this.physician = physician; }
 
-    public int getStayId() {
-        return stayId;
-    }
+    public Integer getAssistingNurse() { return assistingNurse; }
+    public void setAssistingNurse(Integer assistingNurse) { this.assistingNurse = assistingNurse; }
 
-    public void setStayId(int stayId) {
-        this.stayId = stayId;
-    }
-
-    public int getPhysicianId() {
-        return physicianId;
-    }
-
-    public void setPhysicianId(int physicianId) {
-        this.physicianId = physicianId;
-    }
-
-    public Integer getNurseId() {
-        return nurseId;
-    }
-
-    public void setNurseId(Integer nurseId) {
-        this.nurseId = nurseId;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
+    public LocalDateTime getDateUndergoes() { return dateUndergoes; }
+    public void setDateUndergoes(LocalDateTime dateUndergoes) { this.dateUndergoes = dateUndergoes; }
 }

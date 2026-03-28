@@ -10,15 +10,18 @@ public class Undergoes {
     private UndergoesId id;
 
     @ManyToOne
-    @JoinColumn(name = "Patient", insertable = false, updatable = false)
+    @MapsId("patient")
+    @JoinColumn(name = "Patient")
     private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "Procedures", insertable = false, updatable = false)
+    @MapsId("procedures")
+    @JoinColumn(name = "Procedures")
     private Procedure procedure;
 
     @ManyToOne
-    @JoinColumn(name = "Stay", insertable = false, updatable = false)
+    @MapsId("stay")
+    @JoinColumn(name = "Stay")
     private Stay stay;
 
     @ManyToOne
@@ -29,19 +32,8 @@ public class Undergoes {
     @JoinColumn(name = "AssistingNurse")
     private Nurse assistingNurse;
 
-    // ✅ Default Constructor (VERY IMPORTANT for JPA)
+    // ✅ Default Constructor
     public Undergoes() {}
-
-    // ✅ Parameterized Constructor (optional but useful)
-    public Undergoes(UndergoesId id, Patient patient, Procedure procedure,
-                     Stay stay, Physician physician, Nurse assistingNurse) {
-        this.id = id;
-        this.patient = patient;
-        this.procedure = procedure;
-        this.stay = stay;
-        this.physician = physician;
-        this.assistingNurse = assistingNurse;
-    }
 
     // ================= GETTERS =================
 
