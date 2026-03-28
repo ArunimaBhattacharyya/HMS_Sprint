@@ -10,4 +10,5 @@ import java.util.List;
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     List<Room> findByBlock_BlockFloorAndBlock_BlockCode(int blockFloor, int blockCode);
+    List<Room> findByRoomType(String roomType);
 }

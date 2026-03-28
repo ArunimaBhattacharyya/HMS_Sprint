@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping("/room")
 public class RoomController {
 
     @Autowired
@@ -24,16 +24,22 @@ public class RoomController {
         return roomService.getAllRooms();
     }
 
-    // Create room
-    @PostMapping("/create")
-    public RoomResponse createRoom(@RequestBody RoomRequest request) {
-        return roomService.saveRoom(request);
+    @GetMapping("/type/{roomType}")
+    public List<RoomResponse> getRoomsByType(@PathVariable String roomType) {
+        return roomService.getRoomsByType(roomType);
     }
+
 
     // Get by ID
     @GetMapping("/{id}")
     public RoomResponse getRoom(@PathVariable int id) {
         return roomService.getRoomById(id);
+    }
+
+    // Create room
+    @PostMapping("/create")
+    public RoomResponse createRoom(@RequestBody RoomRequest request) {
+        return roomService.saveRoom(request);
     }
 
     // Update room

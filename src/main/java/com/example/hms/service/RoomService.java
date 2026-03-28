@@ -105,4 +105,12 @@ public class RoomService {
 
         roomRepository.delete(room);
     }
+
+    public List<RoomResponse> getRoomsByType(String roomType) {
+        return roomRepository.findByRoomType(roomType)
+                .stream()
+                .map(this::convertToResponse)
+                .toList();
+    }
+
 }
