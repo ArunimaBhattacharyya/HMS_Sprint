@@ -11,7 +11,6 @@ import lombok.Setter;
 public class Nurse {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EmployeeID")
     private int employeeId;
 
