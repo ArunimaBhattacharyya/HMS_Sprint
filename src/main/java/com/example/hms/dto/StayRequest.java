@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class StayRequest {
+    private int stayId;
     private int patientId;   // SSN
     private int roomId;      // RoomNumber
 

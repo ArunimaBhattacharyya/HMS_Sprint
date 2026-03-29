@@ -62,6 +62,35 @@ public class OnCallService {
                 .toList();
     }
 
+    //get by floor
+    public List<OnCallResponse> getByFloor(int blockFloor) {
+
+        List<OnCall> list = onCallRepository.findById_Block_BlockFloor(blockFloor);
+
+        List<OnCallResponse> responseList = new java.util.ArrayList<>();
+
+        for (OnCall o : list) {
+            responseList.add(mapToResponse(o));
+        }
+
+        return responseList;
+    }
+
+    //get by code
+    public List<OnCallResponse> getByCode(int blockCode) {
+
+        List<OnCall> list = onCallRepository.findById_Block_BlockCode(blockCode);
+
+        List<OnCallResponse> responseList = new java.util.ArrayList<>();
+
+        for (OnCall o : list) {
+            responseList.add(mapToResponse(o));
+        }
+
+        return responseList;
+    }
+
+
     //mapping
     private OnCallResponse mapToResponse(OnCall onCall) {
 

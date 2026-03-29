@@ -26,10 +26,12 @@ public class StayService {
     @Autowired
     private RoomRepository roomRepository;
 
-    // ================= CREATE =================
+   //create
     public StayResponse createStay(StayRequest request) {
 
         Stay stay = new Stay();
+
+        stay.setStayId(request.getStayId());
 
         Patient patient = patientRepository.findById(request.getPatientId())
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
@@ -47,7 +49,7 @@ public class StayService {
         return convertToResponse(saved);
     }
 
-    // ================= READ ALL =================
+    //read
     public List<StayResponse> getAllStay() {
         return stayRepository.findAll()
                 .stream()
@@ -55,7 +57,7 @@ public class StayService {
                 .collect(Collectors.toList());
     }
 
-    // ================= READ BY ID =================
+    // read by id
     public StayResponse getStayById(int id) {
         Stay stay = stayRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Stay not found"));
@@ -63,7 +65,43 @@ public class StayService {
         return convertToResponse(stay);
     }
 
-    // ================= UPDATE =================
+    //get stay by patient
+    public List<StayResponse> getStayByPatient(int patientId) {
+
+        List<Stay> stays = stayRepository.findByPatient_Ssn(patientId);
+
+        if (stays.isEmpty()) {
+            throw new RuntimeException("No stay found for patient: " + patientId);
+        }
+
+        List<StayResponse> responseList = new java.util.ArrayList<>();
+
+        for (Stay stay : stays) {
+            responseList.add(convertToResponse(stay));
+        }
+
+        return responseList;
+    }
+
+    //get stay by room
+    public List<StayResponse> getStayByRoom(int roomId) {
+
+        List<Stay> stays = stayRepository.findByRoom_RoomNumber(roomId);
+
+        if (stays.isEmpty()) {
+            throw new RuntimeException("No stay found for room: " + roomId);
+        }
+
+        List<StayResponse> responseList = new java.util.ArrayList<>();
+
+        for(Stay stay : stays){
+            responseList.add(convertToResponse(stay));
+        }
+
+        return responseList;
+    }
+
+    // update
     public StayResponse updateStay(int id, StayRequest request) {
 
         Stay existing = stayRepository.findById(id)
@@ -92,12 +130,14 @@ public class StayService {
         return convertToResponse(updated);
     }
 
-    // ================= DELETE =================
+    // delete
     public void deleteStay(int id) {
+
         stayRepository.deleteById(id);
     }
 
-    // ================= CONVERTER =================
+
+    // converter
     private StayResponse convertToResponse(Stay stay) {
 
         StayResponse response = new StayResponse();
@@ -113,29 +153,5 @@ public class StayService {
         return response;
     }
 
-    public List<StayResponse> getStayByPatient(int patientId) {
 
-        List<Stay> stays = stayRepository.findByPatient_Ssn(patientId);
-
-        if (stays.isEmpty()) {
-            throw new RuntimeException("No stay found for patient: " + patientId);
-        }
-
-        return stays.stream()
-                .map(this::convertToResponse)
-                .toList();
-    }
-
-    public List<StayResponse> getStayByRoom(int roomId) {
-
-        List<Stay> stays = stayRepository.findByRoom_RoomNumber(roomId);
-
-        if (stays.isEmpty()) {
-            throw new RuntimeException("No stay found for room: " + roomId);
-        }
-
-        return stays.stream()
-                .map(this::convertToResponse)
-                .toList();
-    }
 }
