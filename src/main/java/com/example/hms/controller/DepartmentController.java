@@ -1,9 +1,11 @@
 package com.example.hms.controller;
 
-import com.example.hms.entity.Department;
+import com.example.hms.dto.DepartmentRequest;
+import com.example.hms.dto.DepartmentResponse;
 import com.example.hms.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -15,39 +17,39 @@ public class DepartmentController {
 
     //GET all
     @GetMapping
-    public List<Department> getAllDepartments() throws Exception {
+    public List<DepartmentResponse> getAllDepartments() throws Exception {
         return departmentService.getAllDepartments();
     }
 
     //GET by ID
     @GetMapping("/{id}")
-    public Department getDepartmentById(@PathVariable int id) throws Exception {
+    public DepartmentResponse getDepartmentById(@PathVariable int id) throws Exception {
         return departmentService.getDepartmentById(id);
     }
 
     // GET /departments/name/{name}
     @GetMapping("/name/{name}")
-    public List<Department> getDepartmentByName(@PathVariable String name) {
+    public List<DepartmentResponse> getDepartmentByName(@PathVariable String name) {
         return departmentService.getDepartmentByName(name);
     }
 
     // GET /departments/head/{head}
     @GetMapping("/head/{head}")
-    public List<Department> getDepartmentByHead(@PathVariable int head) {
+    public List<DepartmentResponse> getDepartmentByHead(@PathVariable int head) {
         return departmentService.getDepartmentByHead(head);
     }
 
     //POST (create)
     @PostMapping
-    public Department addDepartment(@RequestBody Department department) throws Exception {
-        return departmentService.addDepartment(department);
+    public DepartmentResponse addDepartment(@RequestBody DepartmentRequest request) throws Exception {
+        return departmentService.addDepartment(request);
     }
 
     //PUT (update)
     @PutMapping("/{id}")
-    public Department updateDepartment(@PathVariable int id,
-                                       @RequestBody Department department) throws Exception {
-        return departmentService.updateDepartment(id, department);
+    public DepartmentResponse updateDepartment(@PathVariable int id,
+                                               @RequestBody DepartmentRequest request) throws Exception {
+        return departmentService.updateDepartment(id, request);
     }
 
     //DELETE

@@ -1,11 +1,15 @@
 package com.example.hms.service;
 
+import com.example.hms.dto.AffiliatedWithRequest;
+import com.example.hms.dto.AffiliatedWithResponse;
 import com.example.hms.entity.AffiliatedWith;
 import com.example.hms.entity.AffiliatedWithId;
 import com.example.hms.repository.AffiliatedWithRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AffiliatedWithService {
@@ -13,36 +17,73 @@ public class AffiliatedWithService {
     @Autowired
     private AffiliatedWithRepository affiliatedWithRepository;
 
-    public List<AffiliatedWith> getAllAffiliations() {
-        return affiliatedWithRepository.findAll();
+    // Helper method to map Entity to DTO
+    private AffiliatedWithResponse mapToResponse(AffiliatedWith affiliation) {
+        if (affiliation == null) return null;
+
+        AffiliatedWithResponse response = new AffiliatedWithResponse();
+        response.setPhysician(affiliation.getPhysician());
+        response.setDepartment(affiliation.getDepartment());
+        response.setPrimaryAffiliation(affiliation.getPrimaryAffiliation());
+
+        // Extract related names if the linked entities exist
+        if (affiliation.getPhysicianEntity() != null) {
+            response.setPhysicianName(affiliation.getPhysicianEntity().getName());
+        }
+        if (affiliation.getDepartmentEntity() != null) {
+            response.setDepartmentName(affiliation.getDepartmentEntity().getName());
+        }
+
+        return response;
     }
 
-    public AffiliatedWith getAffiliationById(int physicianId, int departmentId) {
+    public List<AffiliatedWithResponse> getAllAffiliations() {
+        return affiliatedWithRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public AffiliatedWithResponse getAffiliationById(int physicianId, int departmentId) {
         AffiliatedWithId id = new AffiliatedWithId(physicianId, departmentId);
-        return affiliatedWithRepository.findById(id).orElse(null);
+        AffiliatedWith affiliation = affiliatedWithRepository.findById(id).orElse(null);
+        return mapToResponse(affiliation);
     }
 
-    public List<AffiliatedWith> getAffiliationsByPhysician(int physicianId) {
-        return affiliatedWithRepository.findByPhysician(physicianId);
+    public List<AffiliatedWithResponse> getAffiliationsByPhysician(int physicianId) {
+        return affiliatedWithRepository.findByPhysician(physicianId)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 
-    public List<AffiliatedWith> getAffiliationsByDepartment(int departmentId) {
-        return affiliatedWithRepository.findByDepartment(departmentId);
+    public List<AffiliatedWithResponse> getAffiliationsByDepartment(int departmentId) {
+        return affiliatedWithRepository.findByDepartment(departmentId)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 
-    public AffiliatedWith addAffiliation(AffiliatedWith affiliatedWith) {
-        return affiliatedWithRepository.save(affiliatedWith);
+    public AffiliatedWithResponse addAffiliation(AffiliatedWithRequest request) {
+        AffiliatedWith affiliation = new AffiliatedWith();
+        affiliation.setPhysician(request.getPhysician());
+        affiliation.setDepartment(request.getDepartment());
+        affiliation.setPrimaryAffiliation(request.getPrimaryAffiliation());
+
+        AffiliatedWith savedAffiliation = affiliatedWithRepository.save(affiliation);
+        return mapToResponse(savedAffiliation);
     }
 
-    //Update Existing Affiliation (Updating primaryAffiliation flag)
-    public AffiliatedWith updateAffiliation(int physicianId, int departmentId, AffiliatedWith updatedAffiliation) {
+    // Update Existing Affiliation (Updating primaryAffiliation flag)
+    public AffiliatedWithResponse updateAffiliation(int physicianId, int departmentId, AffiliatedWithRequest request) {
         AffiliatedWithId id = new AffiliatedWithId(physicianId, departmentId);
         AffiliatedWith existingAffiliation = affiliatedWithRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Affiliation not found"));
 
-        existingAffiliation.setPrimaryAffiliation(updatedAffiliation.getPrimaryAffiliation());
+        existingAffiliation.setPrimaryAffiliation(request.getPrimaryAffiliation());
 
-        return affiliatedWithRepository.save(existingAffiliation);
+        AffiliatedWith updatedAffiliation = affiliatedWithRepository.save(existingAffiliation);
+        return mapToResponse(updatedAffiliation);
     }
 
     public void deleteAffiliation(int physicianId, int departmentId) {
