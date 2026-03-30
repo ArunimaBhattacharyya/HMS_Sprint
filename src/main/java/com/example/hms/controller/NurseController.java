@@ -50,7 +50,7 @@ public class NurseController {
     // PUT /nurses/{id}
     @PutMapping("/{id}")
     public Nurse updateNurse(@PathVariable int id, @RequestBody Nurse nurse) {
-        return nurseServices.UpdateNurse(id, nurse);
+        return nurseServices.updateNurse(id, nurse);
     }
 
 //    // DELETE /nurses/{id}

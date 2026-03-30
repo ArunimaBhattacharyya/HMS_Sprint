@@ -39,7 +39,7 @@ public class NurseService {
     }
 
     //update existing nurse
-    public Nurse UpdateNurse(int id, Nurse updatedNurse){
+    public Nurse updateNurse(int id, Nurse updatedNurse){
         Nurse existingNurse = nurseRepository.findById(id).orElseThrow(() -> new RuntimeException("Nurse not found"));
 
         existingNurse.setName(updatedNurse.getName());

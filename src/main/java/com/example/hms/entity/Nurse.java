@@ -1,13 +1,17 @@
 package com.example.hms.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
 @Table(name = "nurse") // must match your MySQL table name exactly
+@NoArgsConstructor
+@AllArgsConstructor
 public class Nurse {
 
     @Id
@@ -25,4 +29,6 @@ public class Nurse {
 
     @Column(name = "SSN")
     private int ssn;
+
+
 }
