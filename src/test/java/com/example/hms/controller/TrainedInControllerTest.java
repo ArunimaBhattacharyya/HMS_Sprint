@@ -45,7 +45,7 @@ public class TrainedInControllerTest {
         dto.setCertificationExpires(LocalDateTime.parse("2026-01-01T10:00:00"));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Test
     void testGetAll() throws Exception {
         when(service.getAll()).thenReturn(List.of(dto));
@@ -54,7 +54,7 @@ public class TrainedInControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Test
     void testGetById() throws Exception {
         when(service.getById(1, 101)).thenReturn(dto);
@@ -63,7 +63,7 @@ public class TrainedInControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ GET BY PHYSICIAN
+    // GET BY PHYSICIAN
     @Test
     void testGetByPhysician() throws Exception {
         when(service.getByPhysician(1)).thenReturn(List.of(dto));
@@ -72,7 +72,7 @@ public class TrainedInControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ GET BY PROCEDURE
+    // GET BY PROCEDURE
     @Test
     void testGetByProcedure() throws Exception {
         when(service.getByProcedure(101)).thenReturn(List.of(dto));
@@ -81,7 +81,7 @@ public class TrainedInControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ CREATE
+    // CREATE
     @Test
     void testCreate() throws Exception {
         when(service.save(any(TrainedInDTO.class))).thenReturn(dto);
@@ -99,7 +99,7 @@ public class TrainedInControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Test
     void testUpdate() throws Exception {
         when(service.update(eq(1), eq(101), any(TrainedInDTO.class)))
@@ -118,7 +118,7 @@ public class TrainedInControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ DELETE
+    // DELETE
     @Test
     void testDelete() throws Exception {
         doNothing().when(service).delete(1, 101);
@@ -127,7 +127,7 @@ public class TrainedInControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ EXISTS CHECK
+    // EXISTS CHECK
     @Test
     void testExists() throws Exception {
         when(service.exists(1, 101)).thenReturn(true);

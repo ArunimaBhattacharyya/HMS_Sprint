@@ -29,8 +29,8 @@ public class UndergoesServiceTest {
     void setup() {
         MockitoAnnotations.openMocks(this);
 
-        // __define-ocg__
-        int varOcg = 1; // required variable
+
+        int varOcg = 1;
 
         UndergoesId id = new UndergoesId(
                 1, 101, 10,
@@ -61,7 +61,7 @@ public class UndergoesServiceTest {
         undergoes.setAssistingNurse(nurse);
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Test
     void testGetAll() {
         when(repository.findAll()).thenReturn(List.of(undergoes));
@@ -71,7 +71,7 @@ public class UndergoesServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Test
     void testGetById() {
         when(repository.findById(any(UndergoesId.class)))
@@ -86,7 +86,7 @@ public class UndergoesServiceTest {
         assertEquals(1, result.getPatient());
     }
 
-    // ✅ GET BY PATIENT
+    // GET BY PATIENT
     @Test
     void testGetByPatient() {
         when(repository.findByPatient_Ssn(1))
@@ -97,7 +97,7 @@ public class UndergoesServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ GET BY PROCEDURE
+    // GET BY PROCEDURE
     @Test
     void testGetByProcedure() {
         when(repository.findByProcedure_Code(101))
@@ -108,7 +108,7 @@ public class UndergoesServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ GET BY STAY
+    // GET BY STAY
     @Test
     void testGetByStay() {
         when(repository.findByStay_StayId(10))
@@ -119,7 +119,7 @@ public class UndergoesServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ GET BY PHYSICIAN
+    // GET BY PHYSICIAN
     @Test
     void testGetByPhysician() {
         when(repository.findByPhysician_EmployeeId(5))
@@ -130,7 +130,7 @@ public class UndergoesServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ GET BY NURSE
+    // GET BY NURSE
     @Test
     void testGetByNurse() {
         when(repository.findByAssistingNurse_EmployeeId(2))
@@ -141,7 +141,7 @@ public class UndergoesServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ GET BY DATE RANGE
+    // GET BY DATE RANGE
     @Test
     void testGetByDateRange() {
         when(repository.findById_DateUndergoesBetween(any(), any()))
@@ -155,7 +155,7 @@ public class UndergoesServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ CREATE
+    // CREATE
     @Test
     void testCreate() {
         when(repository.save(any(Undergoes.class)))
@@ -174,7 +174,7 @@ public class UndergoesServiceTest {
         assertNotNull(result);
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Test
     void testUpdate() {
         when(repository.findById(any(UndergoesId.class)))
@@ -200,7 +200,7 @@ public class UndergoesServiceTest {
         assertNotNull(result);
     }
 
-    // ✅ DELETE
+    // DELETE
     @Test
     void testDelete() {
         doNothing().when(repository).deleteById(any(UndergoesId.class));

@@ -51,7 +51,7 @@ public class UndergoesControllerTest {
         dto.setDateUndergoes(LocalDateTime.parse("2025-03-01T10:00:00"));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Test
     public void testGetAll() throws Exception {
         when(service.getAll()).thenReturn(List.of(dto));
@@ -60,7 +60,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ GET BY ID (Composite Key)
+    // GET BY ID (Composite Key)
     @Test
     public void testGetById() throws Exception {
         when(service.getById(eq(1), eq(101), eq(10),
@@ -71,7 +71,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ FILTER - Patient
+    // FILTER - Patient
     @Test
     public void testGetByPatient() throws Exception {
         when(service.getByPatient(1)).thenReturn(List.of(dto));
@@ -80,7 +80,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ FILTER - Procedure
+    // FILTER - Procedure
     @Test
     public void testGetByProcedure() throws Exception {
         when(service.getByProcedure(101)).thenReturn(List.of(dto));
@@ -89,7 +89,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ FILTER - Stay
+    // FILTER - Stay
     @Test
     public void testGetByStay() throws Exception {
         when(service.getByStay(10)).thenReturn(List.of(dto));
@@ -98,7 +98,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ FILTER - Physician
+    // FILTER - Physician
     @Test
     public void testGetByPhysician() throws Exception {
         when(service.getByPhysician(5)).thenReturn(List.of(dto));
@@ -107,7 +107,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ FILTER - Nurse
+    // FILTER - Nurse
     @Test
     public void testGetByNurse() throws Exception {
         when(service.getByNurse(2)).thenReturn(List.of(dto));
@@ -116,7 +116,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ FILTER - Date Range
+    // FILTER - Date Range
     @Test
     public void testGetByDateRange() throws Exception {
         when(service.getByDateRange(
@@ -130,7 +130,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ CREATE
+    // CREATE
     @Test
     public void testCreate() throws Exception {
         when(service.create(any(UndergoesDTO.class))).thenReturn(dto);
@@ -150,7 +150,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Test
     public void testUpdate() throws Exception {
         when(service.update(
@@ -174,7 +174,7 @@ public class UndergoesControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ DELETE
+    // DELETE
     @Test
     public void testDelete() throws Exception {
 

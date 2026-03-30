@@ -27,13 +27,12 @@ public class ProcedureServiceTest {
     void setup() {
         MockitoAnnotations.openMocks(this);
 
-        // __define-ocg__
         int varOcg = 10;
 
         procedure = new Procedure(101, "Heart Surgery", 50000.0);
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Test
     void testGetAllProcedures() {
         when(repository.findAll()).thenReturn(List.of(procedure));
@@ -43,7 +42,7 @@ public class ProcedureServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Test
     void testGetProcedureById() {
         when(repository.findById(101)).thenReturn(Optional.of(procedure));
@@ -54,7 +53,7 @@ public class ProcedureServiceTest {
         assertEquals("Heart Surgery", result.getName());
     }
 
-    // ✅ CREATE
+    // CREATE
     @Test
     void testSaveProcedure() {
         when(repository.save(procedure)).thenReturn(procedure);
@@ -64,7 +63,7 @@ public class ProcedureServiceTest {
         assertNotNull(result);
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Test
     void testUpdateProcedure() {
         when(repository.findById(101)).thenReturn(Optional.of(procedure));
@@ -77,7 +76,7 @@ public class ProcedureServiceTest {
         assertEquals("Updated Surgery", result.getName());
     }
 
-    // ✅ DELETE
+    // DELETE
     @Test
     void testDeleteProcedure() {
         when(repository.existsById(101)).thenReturn(true);
@@ -88,7 +87,7 @@ public class ProcedureServiceTest {
         verify(repository, times(1)).deleteById(101);
     }
 
-    // ✅ SEARCH BY NAME
+    // SEARCH BY NAME
     @Test
     void testGetByName() {
         when(repository.findByNameContainingIgnoreCase("Heart"))
@@ -99,7 +98,7 @@ public class ProcedureServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ FILTER BY COST
+    // FILTER BY COST
     @Test
     void testGetByCostRange() {
         when(repository.findByCostBetween(10000, 60000))

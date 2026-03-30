@@ -40,7 +40,7 @@ public class ProcedureControllerTest {
         procedure = new Procedure(101, "Heart Surgery", 50000.0);
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Test
     void testGetAll() throws Exception {
         when(service.getAllProcedures()).thenReturn(List.of(procedure));
@@ -49,7 +49,7 @@ public class ProcedureControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Test
     void testGetById() throws Exception {
         when(service.getProcedureById(101)).thenReturn(procedure);
@@ -58,7 +58,7 @@ public class ProcedureControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ CREATE
+    // CREATE
     @Test
     void testCreate() throws Exception {
         when(service.saveProcedure(any(Procedure.class))).thenReturn(procedure);
@@ -75,7 +75,7 @@ public class ProcedureControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Test
     void testUpdate() throws Exception {
         when(service.updateProcedure(eq(101), any(Procedure.class)))
@@ -93,7 +93,7 @@ public class ProcedureControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ DELETE
+    // DELETE
     @Test
     void testDelete() throws Exception {
         doNothing().when(service).deleteProcedure(101);
@@ -102,7 +102,7 @@ public class ProcedureControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ SEARCH BY NAME
+    // SEARCH BY NAME
     @Test
     void testSearchByName() throws Exception {
         when(service.getByName("Heart")).thenReturn(List.of(procedure));
@@ -112,7 +112,7 @@ public class ProcedureControllerTest {
                 .andExpect(status().isOk());
     }
 
-    // ✅ FILTER BY COST
+    // FILTER BY COST
     @Test
     void testFilterByCost() throws Exception {
         when(service.getByCostRange(10000, 60000))

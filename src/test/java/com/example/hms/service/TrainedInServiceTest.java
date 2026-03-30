@@ -35,7 +35,6 @@ public class TrainedInServiceTest {
     void setup() {
         MockitoAnnotations.openMocks(this);
 
-        // __define-ocg__
         int varOcg = 99;
 
         TrainedInId id = new TrainedInId(1, 101);
@@ -54,7 +53,7 @@ public class TrainedInServiceTest {
         entity.setCertificationExpires(LocalDateTime.parse("2026-01-01T10:00:00"));
     }
 
-    // ✅ GET ALL
+    // GET ALL
     @Test
     void testGetAll() {
         when(repo.findAll()).thenReturn(List.of(entity));
@@ -64,7 +63,7 @@ public class TrainedInServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ GET BY ID
+    // GET BY ID
     @Test
     void testGetById() {
         when(repo.findById(any(TrainedInId.class)))
@@ -76,7 +75,7 @@ public class TrainedInServiceTest {
         assertEquals(1, result.getPhysicianId());
     }
 
-    // ✅ CREATE
+    // CREATE
     @Test
     void testSave() {
 
@@ -96,7 +95,7 @@ public class TrainedInServiceTest {
         assertNotNull(result);
     }
 
-    // ✅ UPDATE
+    // UPDATE
     @Test
     void testUpdate() {
         when(repo.findById(any())).thenReturn(Optional.of(entity));
@@ -111,7 +110,7 @@ public class TrainedInServiceTest {
         assertNotNull(result);
     }
 
-    // ✅ DELETE
+    // DELETE
     @Test
     void testDelete() {
         when(repo.existsById(any())).thenReturn(true);
@@ -122,7 +121,7 @@ public class TrainedInServiceTest {
         verify(repo, times(1)).deleteById(any());
     }
 
-    // ✅ EXISTS
+    // EXISTS
     @Test
     void testExists() {
         when(repo.existsById(any())).thenReturn(true);
@@ -132,7 +131,7 @@ public class TrainedInServiceTest {
         assertTrue(result);
     }
 
-    // ✅ FILTER BY PHYSICIAN
+    // FILTER BY PHYSICIAN
     @Test
     void testGetByPhysician() {
         when(repo.findByPhysician_EmployeeId(1))
@@ -143,7 +142,7 @@ public class TrainedInServiceTest {
         assertEquals(1, result.size());
     }
 
-    // ✅ FILTER BY PROCEDURE
+    // FILTER BY PROCEDURE
     @Test
     void testGetByProcedure() {
         when(repo.findByProcedure_Code(101))
