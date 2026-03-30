@@ -12,33 +12,53 @@ public class ProcedureController {
 
     private final ProcedureService procedureService;
 
-    // Constructor Injection (Best Practice 🔥)
     public ProcedureController(ProcedureService procedureService) {
         this.procedureService = procedureService;
     }
 
-    // GET all
+    // GET ALL
     @GetMapping
-    public List<Procedure> getAllProcedures() {
+    public List<Procedure> getAll() {
         return procedureService.getAllProcedures();
     }
 
-    // GET by ID
+    // GET BY ID
     @GetMapping("/{code}")
-    public Procedure getProcedure(@PathVariable int code) {
+    public Procedure getById(@PathVariable int code) {
         return procedureService.getProcedureById(code);
     }
 
-    // POST
+    // CREATE
     @PostMapping
-    public Procedure addProcedure(@RequestBody Procedure procedure) {
+    public Procedure create(@RequestBody Procedure procedure) {
         return procedureService.saveProcedure(procedure);
+    }
+
+    // UPDATE
+    @PutMapping("/{code}")
+    public Procedure update(@PathVariable int code, @RequestBody Procedure procedure) {
+        return procedureService.updateProcedure(code, procedure);
     }
 
     // DELETE
     @DeleteMapping("/{code}")
-    public String deleteProcedure(@PathVariable int code) {
+    public String delete(@PathVariable int code) {
         procedureService.deleteProcedure(code);
         return "Procedure deleted successfully";
+    }
+
+    // SEARCH BY NAME
+    @GetMapping("/search")
+    public List<Procedure> searchByName(@RequestParam String name) {
+        return procedureService.getByName(name);
+    }
+
+    // FILTER BY COST
+    @GetMapping("/filterByCost")
+    public List<Procedure> filterByCost(
+            @RequestParam double min,
+            @RequestParam double max) {
+
+        return procedureService.getByCostRange(min, max);
     }
 }

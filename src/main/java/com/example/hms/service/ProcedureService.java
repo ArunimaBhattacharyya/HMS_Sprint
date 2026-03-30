@@ -15,23 +15,48 @@ public class ProcedureService {
         this.procedureRepository = procedureRepository;
     }
 
-    // Get all procedures
+    // GET ALL
     public List<Procedure> getAllProcedures() {
         return procedureRepository.findAll();
     }
 
-    // Get by ID
+    // GET BY ID
     public Procedure getProcedureById(int code) {
-        return procedureRepository.findById(code).orElse(null);
+        return procedureRepository.findById(code)
+                .orElseThrow(() -> new RuntimeException("Procedure not found with code: " + code));
     }
 
-    // Save
+    // CREATE
     public Procedure saveProcedure(Procedure procedure) {
         return procedureRepository.save(procedure);
     }
 
-    // Delete
+    // UPDATE
+    public Procedure updateProcedure(int code, Procedure procedure) {
+
+        Procedure existing = getProcedureById(code);
+
+        existing.setName(procedure.getName());
+        existing.setCost(procedure.getCost());
+
+        return procedureRepository.save(existing);
+    }
+
+    // DELETE
     public void deleteProcedure(int code) {
+        if (!procedureRepository.existsById(code)) {
+            throw new RuntimeException("Procedure not found with code: " + code);
+        }
         procedureRepository.deleteById(code);
+    }
+
+    // SEARCH BY NAME
+    public List<Procedure> getByName(String name) {
+        return procedureRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    // FILTER BY COST
+    public List<Procedure> getByCostRange(double min, double max) {
+        return procedureRepository.findByCostBetween(min, max);
     }
 }
