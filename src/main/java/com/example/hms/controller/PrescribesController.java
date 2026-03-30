@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,6 +56,14 @@ public class PrescribesController {
 	@GetMapping("/medication/{medicationCode}")
 	public List<PrescribesResponse> getByMedication(@PathVariable int medicationCode) {
 		return prescribesService.getByMedication(medicationCode);
+	}
+
+	@GetMapping("/search")
+	public List<PrescribesResponse> searchByPhysicianPatientMedication(
+			@RequestParam int physicianId,
+			@RequestParam int patientSsn,
+			@RequestParam int medicationCode) {
+		return prescribesService.getByPhysicianPatientMedication(physicianId, patientSsn, medicationCode);
 	}
 
 	@GetMapping("/appointment/{appointmentId}")

@@ -104,6 +104,14 @@ public class PrescribesService {
 	}
 
 	@Transactional(readOnly = true)
+	public List<PrescribesResponse> getByPhysicianPatientMedication(int physicianId, int patientSsn, int medicationCode) {
+		return prescribesRepository.findByIdPhysicianAndIdPatientAndIdMedication(physicianId, patientSsn, medicationCode)
+				.stream()
+				.map(this::mapToResponse)
+				.toList();
+	}
+
+	@Transactional(readOnly = true)
 	public List<PrescribesResponse> getByAppointment(int appointmentId) {
 		return prescribesRepository.findByAppointment_AppointmentId(appointmentId)
 				.stream()
@@ -111,16 +119,40 @@ public class PrescribesService {
 				.toList();
 	}
 
+	@Transactional
 	public PrescribesResponse update(int physicianId, int patientSsn, int medicationCode, LocalDateTime date, PrescribesRequest request) {
 		PrescribesId id = buildId(physicianId, patientSsn, medicationCode, date);
 
 		Prescribes existing = prescribesRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Prescribes record not found"));
 
-		existing.setAppointment(resolveAppointment(request.getAppointmentId()));
-		existing.setDose(requireDose(request.getDose()));
+		int targetMedicationCode = request.getMedicationCode() > 0 ? request.getMedicationCode() : medicationCode;
+		Medication targetMedication = medicationRepository.findById(targetMedicationCode)
+				.orElseThrow(() -> new RuntimeException("Medication not found"));
 
-		return mapToResponse(prescribesRepository.save(existing));
+		PrescribesId targetId = buildId(physicianId, patientSsn, targetMedicationCode, date);
+
+		if (!targetId.equals(id) && prescribesRepository.existsById(targetId)) {
+			throw new RuntimeException("Prescribes record already exists for target medication");
+		}
+
+		if (targetId.equals(id)) {
+			existing.setMedication(targetMedication);
+			existing.setAppointment(resolveAppointment(request.getAppointmentId()));
+			existing.setDose(requireDose(request.getDose()));
+			return mapToResponse(prescribesRepository.save(existing));
+		}
+
+		Prescribes updated = new Prescribes();
+		updated.setId(targetId);
+		updated.setPhysician(existing.getPhysician());
+		updated.setPatient(existing.getPatient());
+		updated.setMedication(targetMedication);
+		updated.setAppointment(resolveAppointment(request.getAppointmentId()));
+		updated.setDose(requireDose(request.getDose()));
+
+		prescribesRepository.delete(existing);
+		return mapToResponse(prescribesRepository.save(updated));
 	}
 
 	public void delete(int physicianId, int patientSsn, int medicationCode, LocalDateTime date) {
