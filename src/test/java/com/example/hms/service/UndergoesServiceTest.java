@@ -21,7 +21,7 @@ public class UndergoesServiceTest {
     private UndergoesRepository repository;
 
     @InjectMocks
-    private UndergoesServiceImpl service;
+    private UndergoesService service;
 
     private Undergoes undergoes;
 
