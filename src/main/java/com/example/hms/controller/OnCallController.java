@@ -49,6 +49,6 @@ public class OnCallController {
     @GetMapping("/code/{blockCode}")
     public List<OnCallResponse> getByCode(@PathVariable int blockCode) {
 
-        return onCallService.getByFloor(blockCode);
+        return onCallService.getByCode(blockCode);
     }
 }
