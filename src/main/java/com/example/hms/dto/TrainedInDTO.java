@@ -1,12 +1,17 @@
 package com.example.hms.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
 public class TrainedInDTO {
 
     private int physicianId;
     private int treatmentId;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime certificationDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime certificationExpires;
 
     public TrainedInDTO() {}
